@@ -44,7 +44,7 @@ docker ps
 
 ```bash
 # Install all dependencies using Poetry
-poetry install
+poetry install --no-root
 # Poetry will automatically create and manage a virtual environment
 ```
 
