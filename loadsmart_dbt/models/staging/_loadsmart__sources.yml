@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: loadsmart
+    schema: analytics_cleaned
+    database: loadsmart_challenge
+    tables:
+      - name: cleaned_loads
+        description: Cleaned dataset produced by the Python ingestion notebook.
+

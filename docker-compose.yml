@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: loadsmart-postgres
+    environment:
+      POSTGRES_USER: loadsmart_user
+      POSTGRES_PASSWORD: loadsmart_password
+      POSTGRES_DB: loadsmart_challenge
+    ports:
+      - "5432:5432"
+    volumes:
+      - loadsmart_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  loadsmart_data:

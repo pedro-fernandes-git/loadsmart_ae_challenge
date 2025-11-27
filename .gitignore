@@ -1,0 +1,88 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# dbt
+loadsmart_dbt/target/
+loadsmart_dbt/dbt_packages/
+loadsmart_dbt/logs/
+target/
+dbt_packages/
+logs/
+*.log
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment variables
+.env
+.env.local
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Credentials (keep these private!)
+*credentials*.yml
+*secrets*.yml
+
+# Docker volumes
+docker-volumes/
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+~$*.xlsx
+~$*.pbix
+
+# Power BI temp files
+*.pbix.tmp
+
+# Reports with sensitive data (optional - uncomment if needed)
+# reports/*.pbix
+
+# Exports with sensitive data (optional - uncomment if needed)
+# notebooks/exports/*.csv
+

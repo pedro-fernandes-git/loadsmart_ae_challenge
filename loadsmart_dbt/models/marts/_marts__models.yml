@@ -1,0 +1,197 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: Calendar dimension generated from the min/max dates present in staging to support time-based analysis.
+    columns:
+      - name: date_day
+        description: Calendar day at daily grain; primary key of the date dimension.
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_shipper
+    description: Unique list of shippers normalized from load events.
+    columns:
+      - name: shipper_id
+        description: Deterministic surrogate key for the shipper, derived from the shipper name.
+        tests:
+          - unique
+          - not_null
+      - name: shipper_name
+        description: Business name of the shipper as provided in the load.
+        tests:
+          - not_null
+
+  - name: dim_carrier
+    description: Unique list of carriers normalized from load events.
+    columns:
+      - name: carrier_id
+        description: Deterministic surrogate key for the carrier, derived from the carrier name.
+        tests:
+          - unique
+          - not_null
+      - name: carrier_name
+        description: Business name of the carrier as provided in the load.
+        tests:
+          - not_null
+
+  - name: fact_loads
+    description: Fact table at load grain capturing pricing, timing, tracking and operational outcomes.
+    columns:
+      - name: loadsmart_id
+        description: Business identifier of the load; one row per loadsmart_id.
+        tests:
+          - unique
+          - not_null
+
+      - name: shipper_id
+        description: Foreign key to dim_shipper.
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_shipper')
+                field: shipper_id
+
+      - name: carrier_id
+        description: Foreign key to dim_carrier.
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_carrier')
+                field: carrier_id
+
+      - name: pickup_city
+        description: City name for the pickup location (denormalized from staging).
+        tests:
+          - not_null
+
+      - name: pickup_state
+        description: State code for the pickup location (denormalized from staging).
+        tests:
+          - not_null
+
+      - name: delivery_city
+        description: City name for the delivery location (denormalized from staging).
+        tests:
+          - not_null
+
+      - name: delivery_state
+        description: State code for the delivery location (denormalized from staging).
+        tests:
+          - not_null
+
+      - name: pickup_location
+        description: Formatted pickup location as 'City, State' for easy display in BI tools.
+
+      - name: delivery_location
+        description: Formatted delivery location as 'City, State' for easy display in BI tools.
+
+      - name: lane
+        description: Full lane identifier as 'Pickup City, State → Delivery City, State' representing the origin-destination pair.
+
+      - name: load_type
+        description: Classification of load as 'Intra-State' or 'Cross-State' based on pickup and delivery states.
+
+      - name: pickup_date
+        description: Pickup calendar date derived from pickup_time; links to dim_date.
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_day
+
+      - name: delivery_date
+        description: Delivery calendar date derived from delivery_time; links to dim_date.
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_day
+
+      - name: quote_date
+        description: Quote calendar date derived from quote_time; links to dim_date.
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_day
+
+      - name: book_date
+        description: Booking calendar date derived from book_time; links to dim_date.
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_day
+
+      - name: source_date
+        description: Carrier sourcing calendar date derived from source_time; links to dim_date.
+        tests:
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_day
+
+      - name: equipment_type
+        description: Type of equipment required or used for the load (e.g., dry van, reefer, flatbed).
+        tests:
+          - not_null
+
+      - name: sourcing_channel
+        description: Channel through which the load was sourced (e.g., spot market, contract, digital).
+      - name: quote_time
+        description: Timestamp when the load was quoted to the shipper.
+      - name: book_time
+        description: Timestamp when the shipper booked the load.
+      - name: source_time
+        description: Timestamp when a carrier was sourced/contracted.
+      - name: pickup_time
+        description: Actual pickup timestamp.
+      - name: delivery_time
+        description: Actual delivery timestamp.
+      - name: pickup_appointment_time
+        description: Scheduled pickup appointment timestamp.
+      - name: delivery_appointment_time
+        description: Scheduled delivery appointment timestamp.
+
+      - name: book_price
+        description: Price charged to the shipper for the load.
+      - name: source_price
+        description: Cost paid to the carrier for the load.
+      - name: pnl
+        description: Profit and loss for the load (book_price minus source_price).
+      - name: mileage
+        description: Estimated or actual miles for the lane.
+      - name: carrier_rating
+        description: Carrier performance rating score.
+
+      - name: vip_carrier
+        description: Flag indicating whether the carrier is classified as VIP.
+      - name: carrier_dropped_us_count
+        description: Count of times this carrier has dropped loads with us.
+      - name: carrier_on_time_to_pickup
+        description: Flag indicating the carrier arrived on time to pickup.
+      - name: carrier_on_time_to_delivery
+        description: Flag indicating the carrier arrived on time to delivery.
+      - name: carrier_on_time_overall
+        description: Flag indicating overall on-time performance across the trip.
+      - name: has_mobile_app_tracking
+        description: Flag indicating mobile app tracking is enabled.
+      - name: has_macropoint_tracking
+        description: Flag indicating MacroPoint tracking is enabled.
+      - name: has_edi_tracking
+        description: Flag indicating EDI tracking is enabled.
+      - name: contracted_load
+        description: Flag indicating the load is part of a contracted agreement.
+      - name: load_booked_autonomously
+        description: Flag indicating the load was booked via autonomous workflow.
+      - name: load_sourced_autonomously
+        description: Flag indicating the load was sourced via autonomous workflow.
+      - name: load_was_cancelled
+        description: Flag indicating the load was cancelled.
