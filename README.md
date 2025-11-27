@@ -75,31 +75,8 @@ Open `clean-raw_loads.ipynb` and run all cells. This notebook will:
 - Cast columns to appropriate data types
 - Load data into PostgreSQL schema `analytics_cleaned`
 
-### Step 4: Configure dbt Profile
 
-Create a `profiles.yml` file in your home directory under `.dbt/` folder (or use the one in the repository):
-
-**Location:**
-- Windows: `C:\Users\<YourUsername>\.dbt\profiles.yml`
-- macOS/Linux: `~/.dbt/profiles.yml`
-
-**Content:**
-```yaml
-loadsmart_dbt:
-  outputs:
-    dev:
-      type: postgres
-      host: localhost
-      port: 5432
-      user: loadsmart_user
-      password: loadsmart_password
-      dbname: loadsmart_challenge
-      schema: analytics
-      threads: 4
-  target: dev
-```
-
-### Step 5: Run dbt Models
+### Step 4: Run dbt Models
 
 Build the dimensional data model:
 
@@ -140,7 +117,7 @@ This will create the following tables in the `analytics` schema:
 -  Date dimension completeness
 
 
-### Step 6: Generate Export CSV and Send CSV via SFTP and email
+### Step 5: Generate Export CSV and Send CSV via SFTP and email
 
 **Requirements**
 - Start SFTP server to be able to upload file:
@@ -183,7 +160,7 @@ docker exec loadsmart-sftp-test ls -lh /home/testuser/upload/
 ```
 
 
-### Step 7: Power BI Visualizations
+### Step 6: Power BI Visualizations
 
 
 
