@@ -15,9 +15,8 @@ This project implements a complete data pipeline that:
 ## Prerequisites
 
 - **Docker Desktop** (for PostgreSQL database)
-- **Python 3.8+** with pip
-- **dbt-core** and **dbt-postgres**
-- **Jupyter Notebook** or **JupyterLab**
+- **Python 3.9+**
+- **Poetry 1.9** (for dependency management) - [Installation guide](https://python-poetry.org/docs/#installation)
 - **Power BI Desktop** (optional, for viewing reports)
 
 ## Setup Instructions
@@ -41,21 +40,17 @@ docker ps
 - User: `loadsmart_user`
 - Password: `loadsmart_password`
 
-### Step 2: Install Python Dependencies:
+### Step 2: Install Python Dependencies with Poetry
 
 ```bash
-# Create a virtual environment (recommended)
-python -m venv .venv
-
-# Activate the virtual environment
-# On Windows:
-.venv\Scripts\activate
-# On macOS/Linux:
-source .venv/bin/activate
-
-# Install required packages
-pip install pandas sqlalchemy psycopg2-binary jupyter dbt-core dbt-postgres paramiko
+# Install all dependencies using Poetry
+poetry install
+# Poetry will automatically create and manage a virtual environment
 ```
+
+**Using Poetry commands:**
+- Run commands directly: `poetry run <command>`
+- Or activate the Poetry shell: `poetry shell` (then run commands normally)
 
 ### Step 3: Clean and Ingest the Raw Data
 
@@ -65,8 +60,8 @@ Run the data cleaning notebook to process the raw CSV and load it into PostgreSQ
 # Navigate to the notebooks directory
 cd notebooks
 
-# Start Jupyter Notebook
-jupyter notebook
+# Start Jupyter Notebook using Poetry
+poetry run jupyter notebook
 ```
 
 Open `clean-raw_loads.ipynb` and run all cells. This notebook will:
@@ -83,25 +78,18 @@ Build the dimensional data model:
 Open a new terminal because jupyter logs are running on the other terminal
 
 ```bash
-
-# Activate the virtual environment
-# On Windows:
-.venv\Scripts\activate
-# On macOS/Linux:
-source .venv/bin/activate
-
 # Navigate to the dbt project directory
 cd loadsmart_dbt
 
 # Run dbt models to create the dimensional schema
-dbt run --profile loadsmart_dbt --target dev --profiles-dir .
+poetry run dbt run --profile loadsmart_dbt --target dev --profiles-dir .
 
 # Run dbt tests to validate data quality
-dbt test --profile loadsmart_dbt --target dev --profiles-dir .
+poetry run dbt test --profile loadsmart_dbt --target dev --profiles-dir .
 
 # Generate and serve documentation
-dbt docs generate
-dbt docs serve
+poetry run dbt docs generate
+poetry run dbt docs serve
 ```
 
 This will create the following tables in the `analytics` schema:
@@ -148,7 +136,7 @@ After setting the credentials, open and execute all cells from the notebook
 
 ```bash
 # In the notebooks directory
-jupyter notebook export.ipynb
+poetry run jupyter notebook export.ipynb
 ```
 
 - Generate CSV Export (Cells 1-4): 
