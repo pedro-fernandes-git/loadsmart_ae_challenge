@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "loadsmart-ae-challenge"
+version = "1.0.0"
+description = "Loadsmart Analytics Engineer Challenge 2025 - Data Pipeline with dbt and PostgreSQL"
+authors = ["Pedro <pedro.linhares.fernandes@gmail.com>"]
+readme = "README.md"
+packages = []
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "2.1.3"
+numpy = "1.26.2"
+sqlalchemy = "2.0.23"
+psycopg2-binary = "2.9.9"
+dbt-core = "1.10.15"
+dbt-postgres = "1.9.1"
+jupyter = "1.0.0"
+jupyterlab = "4.0.9"
+ipython = "8.18.1"
+paramiko = "3.4.0"
+python-dotenv = "1.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
