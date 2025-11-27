@@ -150,6 +150,9 @@ docker exec loadsmart-sftp-test ls -lh /home/testuser/upload/
 
 ### Step 6: Power BI Visualizations
 
+**Report Files:**
+- **Interactive Dashboard**: 
+`reports/power_bi_file.pbix` - Open this file in Power BI Desktop to explore the interactive visualizations(the connection is already configured to connect to the local PostgreSQL database).
 
-
+- **PDF Export**: `reports/power_bi_report.pdf` - Static snapshot of the dashboard for easy sharing and viewing without Power BI
 
