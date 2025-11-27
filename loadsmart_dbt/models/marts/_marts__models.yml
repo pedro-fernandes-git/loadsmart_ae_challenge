@@ -195,3 +195,55 @@ models:
         description: Flag indicating the load was sourced via autonomous workflow.
       - name: load_was_cancelled
         description: Flag indicating the load was cancelled.
+
+  - name: rpt_delivered_last_month
+    description: >
+      Report model containing all loads delivered in the most recent complete calendar month 
+      present in the dataset. This denormalized view includes shipper and carrier names for 
+      easy export to external systems via sFTP, email, or direct query.
+      
+      The "last month" is dynamically calculated as the full calendar month of the maximum 
+      delivery_date in fact_loads, making this report automatically update as new data arrives.
+      
+      Intended for automated data distribution and monthly reporting workflows.
+    columns:
+      - name: loadsmart_id
+        description: Unique business identifier for the load.
+        tests:
+          - not_null
+
+      - name: shipper_name
+        description: Name of the shipper who booked the load.
+        tests:
+          - not_null
+
+      - name: delivery_date
+        description: Date when the load was delivered.
+        tests:
+          - not_null
+
+      - name: pickup_city
+        description: City where the load was picked up.
+        tests:
+          - not_null
+
+      - name: pickup_state
+        description: State code where the load was picked up.
+        tests:
+          - not_null
+
+      - name: delivery_city
+        description: City where the load was delivered.
+        tests:
+          - not_null
+
+      - name: delivery_state
+        description: State code where the load was delivered.
+        tests:
+          - not_null
+
+      - name: book_price
+        description: Price charged to the shipper for this load.
+
+      - name: carrier_name
+        description: Name of the carrier who executed the load.

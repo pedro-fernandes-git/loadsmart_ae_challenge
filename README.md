@@ -16,7 +16,7 @@ This project implements a complete data pipeline that:
 
 - **Docker Desktop** (for PostgreSQL database)
 - **Python 3.9+**
-- **Poetry 1.9** (for dependency management) - [Installation guide](https://python-poetry.org/docs/#installation)
+- **Poetry 1.8.4** (for dependency management) - [Installation guide](https://python-poetry.org/docs/#installation)
 - **Power BI Desktop** (optional, for viewing reports)
 
 ## Setup Instructions
